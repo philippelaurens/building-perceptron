@@ -7,5 +7,5 @@ __pycache__/
 .env
 .vscode
 
-# Fichiers Lourds
+# Fichiers Data
 /data/
