@@ -324,60 +324,7 @@ def identify_column_types(df):
 
     return numeric_columns, categorical_columns
 
-def preprocess_data(X, numeric_columns=None, categorical_columns=None):
-    """
-    Prépare les données avec scaling robuste et one-hot encoding AVANT le split train/test.
 
-    Gère tous les cas de figure :
-    - Colonnes numériques et catégorielles
-    - Uniquement colonnes numériques
-    - Uniquement colonnes catégorielles
-    - Aucune colonne (levera une exception)
-
-    Args:
-        X (pd.DataFrame or pd.Series): Ensemble des features
-        numeric_columns (list, optional): Colonnes numériques. Si None, détecté automatiquement.
-        categorical_columns (list, optional): Colonnes catégorielles. Si None, détecté automatiquement.
-
-    Returns:
-        tuple: (X_preprocessed, column_transformer)
-
-    Raises:
-        ValueError: Si aucune colonne n'est présente
-    """
-    # S'assurer que l'entrée est un DataFrame
-    if isinstance(X, pd.Series):
-        X = X.to_frame()
-
-    # Si les colonnes ne sont pas spécifiées, les détecter automatiquement
-    if numeric_columns is None or categorical_columns is None:
-        numeric_columns, categorical_columns = identify_column_types(X)
-
-    # Vérifier qu'il y a au moins un type de colonne
-    if not numeric_columns and not categorical_columns:
-        raise ValueError("Aucune colonne numérique ou catégorielle trouvée dans le DataFrame.")
-
-    # Préparateurs par type de colonne
-    transformers = []
-
-    # Colonnes numériques
-    if numeric_columns:
-        transformers.append(('num', RobustScaler(), numeric_columns))
-
-    # Colonnes catégorielles
-    if categorical_columns:
-        transformers.append(('cat', OneHotEncoder(drop='first', handle_unknown='ignore'), categorical_columns))
-
-    # Créer le transformateur
-    column_transformer = ColumnTransformer(
-        transformers=transformers,
-        remainder='drop'  # Ne pas conserver les colonnes non transformées
-    )
-
-    # Ajuster et transformer
-    X_preprocessed = column_transformer.fit_transform(X)
-
-    return X_preprocessed, column_transformer
 
 # # Exemple d'utilisation : Préprocessing
 # X_preprocessed, preprocessor = preprocess_data(X)
