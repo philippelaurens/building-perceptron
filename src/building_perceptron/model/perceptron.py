@@ -1,16 +1,18 @@
 from pathlib import Path
-
 import numpy as np
 import pandas as pd
+from sklearn.base import BaseEstimator, ClassifierMixin
 
-class Perceptron:
+class Perceptron(BaseEstimator,ClassifierMixin):
 
     def __init__(self, lr: float = 0.01, epochs: int = 100) -> None:
         super().__init__()
         self.lr = lr
         self.epochs = epochs
+
         self.w = None
         self.b = None
+        self.loss_history = []
 
     def activation_function(self, z: float | np.ndarray) -> np.ndarray:
         """Fonction d'activation Heaviside : renvoie 1 si z >= 0, sinon 0."""
@@ -21,51 +23,9 @@ class Perceptron:
     # - Si une caractéristique est inutile/inutilement complexe, son poids w_j restera très proche de 0.
     # def fit_perceptron(X, y, lr=0.1, epochs=100):
     def fit(self, X: np.ndarray, y: np.ndarray):
-        m, n = X.shape
-        w = np.zeros(n, dtype=float)
-        b = 0.0
-        lr = self.lr
-        margin = 1e-9
 
-        for epoch in range(self.epochs):
-            errors_in_epoch = 0
-            
-            for i in range(m):
-                # Combinaison linéaire (z)
-                z_i = np.dot(X[i], w) + b
-                
-                # Prédiction binaire stricte (0 ou 1)
-                y_hat_i = self.activation_function(z_i)
-                
-                # Calcul de l'erreur brute : vaut -1, 0, ou 1
-                # Le modèle s'est trompé en prédisant 1 : error = -1
-                if y[i] == 1 and z_i <= margin:
-                    error = 1.0
-                # Le modèle s'est trompé en prédisant 0 : error = +1
-                elif y[i] == 0 and z_i >= -margin:
-                    error = -1.0
-                else:
-                    error = 0.0
-                
-                # Mise à jour directe si erreur
-                # Le modèle s'est trompé en prédisant 0 : error = +1
-                # Le modèle s'est trompé en prédisant 1 : error = -1
-                if error != 0:
-                    # si error > 0, w augmente, ce qui pousse la prédiction vers 1
-                    # si error < 0, w diminue, ce qui pousse la prédiction vers 0
-                    w += lr * error * X[i]
-                    b += lr * error
-                    errors_in_epoch += 1
-                    
-            # Arrêt précoce si aucune erreur sur l'ensemble du dataset
-            if errors_in_epoch == 0:
-                print(f"Convergence atteinte à l'époque {epoch + 1} !")
-                break
-
-        self.w = w
-        self.b = b
-
-        return self
+        self.loss_history = []
+        return self.fit_classique(np.asarray(X), np.asarray(y))
 
 
     def fit_classique(self, X: np.ndarray, y: np.ndarray):
@@ -76,6 +36,7 @@ class Perceptron:
         m, n = X.shape
         self.w = np.zeros(n, dtype=float)
         self.b = 0.0
+        self.loss_history = []
 
         for epoch in range(self.epochs):
             erreurs_epoque = 0
@@ -88,6 +49,9 @@ class Perceptron:
                     self.w += self.lr * erreur * X[i]
                     self.b += self.lr * erreur
                     erreurs_epoque += 1
+
+            # On enregistre le nombre d'erreurs de l'époque
+            self.loss_history.append(erreurs_epoque)
 
             if erreurs_epoque == 0:
                 print(f"Convergence atteinte à l'époque {epoch + 1} !")
@@ -104,6 +68,7 @@ class Perceptron:
         w = np.zeros(n, dtype=float)
         b = 0.0
         lr = self.lr
+        self.loss_history = []
 
         # marge fonctionnelle : un exemple n'est "bien classé" que si
         #   y=1 -> z > marge  et  y=0 -> z < -marge.
@@ -136,6 +101,9 @@ class Perceptron:
                     w += lr * erreur * X[i]
                     b += lr * erreur
                     erreurs_epoque += 1
+
+            # On enregistre le nombre d'erreurs de l'époque
+            self.loss_history.append(erreurs_epoque)
 
             # Arrêt anticipé : une epoch complète sans correction signifie que tous
             # les exemples sont bien classés (garanti si les données sont linéairement séparables)
