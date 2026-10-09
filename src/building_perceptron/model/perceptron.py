@@ -5,10 +5,11 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 
 class Perceptron(BaseEstimator,ClassifierMixin):
 
-    def __init__(self, lr: float = 0.01, epochs: int = 100) -> None:
+    def __init__(self, lr: float = 0.01, epochs: int = 100, method: str = 'classique') -> None:
         super().__init__()
         self.lr = lr
         self.epochs = epochs
+        self.method = method
 
         self.w = None
         self.b = None
@@ -25,7 +26,11 @@ class Perceptron(BaseEstimator,ClassifierMixin):
     def fit(self, X: np.ndarray, y: np.ndarray):
 
         self.loss_history = []
-        return self.fit_classique(np.asarray(X), np.asarray(y))
+
+        if self.method == 'strict':
+            return self.fit_strict(X, y)
+        else:
+            return self.fit_classique(X, y)        
 
 
     def fit_classique(self, X: np.ndarray, y: np.ndarray):

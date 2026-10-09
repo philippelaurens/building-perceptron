@@ -9,6 +9,7 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         self.w = None
         self.b = None
         self.loss_history = []
+        self.classes_ = []
 
     def sigmoid(self, z: np.ndarray) -> np.ndarray:
         """Fonction d'activation Sigmoïde."""
@@ -46,6 +47,8 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
             # 4. Mise à jour des poids (Descente de gradient)
             self.w -= self.lr * dw
             self.b -= self.lr * db
+
+            self.classes_ = np.unique(y)
 
         return self
 
