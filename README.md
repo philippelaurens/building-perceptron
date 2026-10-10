@@ -121,11 +121,6 @@ En santé, un **Faux Négatif** (dire qu'une tumeur est bénigne alors qu'elle e
 - **Matrice de confusion** : Visualisation détaillée des erreurs
 
 
-
-
-
-
-
 ## Installation et utilisation
 
 ### 1. Cloner le projet
@@ -145,14 +140,62 @@ source .venv/Scripts/activate  # Git Bash
 uv pip install -e .
 ```
 
-### 4. Lancer l'analyse
+### 4. Tester le perceptron
 ```bash
-# Perceptron pédagogique
-uv run script/training/run_perceptron.py
-
+uv run scripts/training/run_perceptron.py --num x
+1 : Porte logique AND
+2 : Test de valeurs aléatoires 
 ```
 
 
 
+
+
+
+
+
+
+
+
+
+
+## Exemple d'utilisation du Perceptron personnalisé
+
+```python
+from model_utils import Perceptron, eval_classification
+from sklearn.model_selection import train_test_split
+import pandas as pd
+
+# Chargement des données
+df = pd.read_csv('raw_data/bcw_data.csv')
+X = df.drop(['id', 'diagnosis'], axis=1)
+y = df['diagnosis'].map({'M': 1, 'B': 0})
+
+# Séparation train/test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Définition du modèle et de la grille de paramètres
+perceptron = Perceptron()
+param_grid = {
+    'threshold': [0.3, 0.5, 0.7],
+    'learning_rate': [0.001, 0.01, 0.1],
+    'n_iterations': [50, 100, 200]
+}
+
+# Évaluation avec optimisation
+results = eval_classification(
+    algo=perceptron,
+    param_grid=param_grid,
+    X_train=X_train,
+    y_train=y_train,
+    X_test=X_test,
+    y_test=y_test,
+    search_type='grid',
+    scoring='recall',  # Focus sur le Recall pour le contexte médical
+    cv=5
+)
+```
 
 
