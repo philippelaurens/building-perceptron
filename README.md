@@ -100,7 +100,7 @@ Le notebook `eda.ipynb` réalise une analyse complète des données :
     - Tri des variables à l'information redondante
 3. Standardisation / Normalisation
     - Choix du Robust Scaler
-Annexe : Analyse en Composantes Principales (PCA)
+0. Analyse en Composantes Principales (PCA)
 
 
 
