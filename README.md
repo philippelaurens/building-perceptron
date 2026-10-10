@@ -105,6 +105,22 @@ Le notebook `eda.ipynb` réalise une analyse complète des données :
 
 ## Training
 
+### Training et Evaluation
+
+Le notebook `training.ipynb` réalise l'entraînement sur le dataset nettoyé en utilisant le Perceptron et la régression logistiqu
+1. Chargement et inspection initiale du dataset
+    - Détection et traitement de l'encodage, des doublons, des colonnes vides
+    - Contrôle et harmonisation des types de données
+2. Statistiques descriptives
+    - Analyse de la distribution des variables
+    - Etude de la bimodalité de certaines distributions
+    - Analyse de la corrélation entre features, et des features avec la cible
+    - Etude du chevauchement entre features
+    - Tri des variables à l'information redondante
+3. Standardisation / Normalisation
+    - Choix du Robust Scaler
+0. Analyse en Composantes Principales (PCA)
+
 ### Métriques de performance
 
 **⚠️ Importance du contexte médical :**
