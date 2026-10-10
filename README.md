@@ -107,19 +107,26 @@ Le notebook `eda.ipynb` réalise une analyse complète des données :
 
 ### Training et Evaluation
 
-Le notebook `training.ipynb` réalise l'entraînement sur le dataset nettoyé en utilisant le Perceptron et la régression logistiqu
-1. Chargement et inspection initiale du dataset
-    - Détection et traitement de l'encodage, des doublons, des colonnes vides
-    - Contrôle et harmonisation des types de données
-2. Statistiques descriptives
-    - Analyse de la distribution des variables
-    - Etude de la bimodalité de certaines distributions
-    - Analyse de la corrélation entre features, et des features avec la cible
-    - Etude du chevauchement entre features
-    - Tri des variables à l'information redondante
-3. Standardisation / Normalisation
-    - Choix du Robust Scaler
-0. Analyse en Composantes Principales (PCA)
+Le notebook `training.ipynb` réalise l'entraînement sur le dataset nettoyé en utilisant le Perceptron et la régression logistique.
+1. Test du Perceptron
+    - Test de la porte logique AND
+    - Test de valeurs aléatoires généré avec make_classification
+2. Préparation
+    - Séparation des caractéristiques (X) et de la cible (y)
+    - Fonctions : Metrics, Confusion Matrix, Learning Curve
+    - GridSearchCV : 
+        - Perceptron : get_evaluation
+        - Régression Logistique : get_evaluation_lr, get_evaluation_lr_seuils
+    - ROC/AUC Curve
+3. Training / Evaluation
+    - Training du Perceptron 
+        - Matrice de confusion / Courbe d'apprentissage
+        - Utilisation de GridSearchCV
+        - Matrice de score
+    - Training de la Régression Logistique
+        - Matrice de confusion / Courbe d'apprentissage / Score ROC/AUC
+        - Utilisation de GridSearchCV : Seuil de la Régression Logistique (fixe) / Seuil de la Régression Logistique (Liste)
+        - Score ROC/AUC
 
 ### Métriques de performance
 
@@ -164,54 +171,100 @@ uv run scripts/training/run_perceptron.py --num x
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
 ## Exemple d'utilisation du Perceptron personnalisé
 
 ```python
-from model_utils import Perceptron, eval_classification
-from sklearn.model_selection import train_test_split
+import numpy as np
 import pandas as pd
 
-# Chargement des données
-df = pd.read_csv('raw_data/bcw_data.csv')
-X = df.drop(['id', 'diagnosis'], axis=1)
-y = df['diagnosis'].map({'M': 1, 'B': 0})
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Séparation train/test
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report
+from sklearn.metrics import roc_curve, roc_auc_score
+from sklearn.base import BaseEstimator, ClassifierMixin
 
-# Définition du modèle et de la grille de paramètres
-perceptron = Perceptron()
+import plotly.express as px
+import plotly.io as pio
+
+from building_perceptron.model.perceptron import Perceptron
+
+
+def get_evaluation(algorithme, param_grid, X_train, y_train, X_test, y_test):
+
+        # Recherche par grille avec 5-fold cross-validation
+    grid_search = GridSearchCV(
+        estimator=algorithme,
+        param_grid=param_grid,
+        cv=5,
+        scoring='recall',
+        n_jobs=-1
+    )
+
+    # Entraînement sur les données
+    grid_search.fit(X_train, y_train)
+
+    # Extraction du meilleur modèle et prédictions sur le test
+    best_model = grid_search.best_estimator_
+    y_pred = best_model.predict(X_test)
+
+    # Calcul des métriques d'évaluation
+    test_accuracy = (y_pred == y_test).mean()
+    cm = confusion_matrix(y_test, y_pred)
+
+    # Affichage synthétique dans la console
+    print("=== Résultats du Tuning ===")
+    print("Meilleurs paramètres :", grid_search.best_params_)
+    print(f"Meilleur Rappel CV (Recall) : {grid_search.best_score_:.4f}")
+    print(f"Précision sur Jeu Test  : {test_accuracy:.4f}")
+
+    # Retour d'un dictionnaire complet d'artefacts
+    return {
+        "best_model": best_model,
+        "best_params": grid_search.best_params_,
+        "best_cv_score": grid_search.best_score_,
+        "test_accuracy": test_accuracy,
+        "confusion_matrix": cm,
+        "y_pred": y_pred,
+        "cv_results": pd.DataFrame(grid_search.cv_results_)
+    }
+
+
+# Séparation des caractéristiques (X) et de la cible (y)
+target_col = "diagnosis"
+
+X_train = df_train.drop(columns=[target_col]).values
+y_train = df_train[target_col].values
+
+X_test = df_test.drop(columns=[target_col]).values
+y_test = df_test[target_col].values
+
+
+# Algorithme
+algorithme = Perceptron()
+
+# Grille d'hyperparamètres à tester
 param_grid = {
-    'threshold': [0.3, 0.5, 0.7],
-    'learning_rate': [0.001, 0.01, 0.1],
-    'n_iterations': [50, 100, 200]
+    'lr': [0.0001, 0.001, 0.01, 0.1, 1.0],
+    'epochs': [50, 100, 200, 500, 1000],
+    'method': ['classique', 'strict']
 }
 
-# Évaluation avec optimisation
-results = eval_classification(
-    algo=perceptron,
-    param_grid=param_grid,
-    X_train=X_train,
-    y_train=y_train,
-    X_test=X_test,
-    y_test=y_test,
-    search_type='grid',
-    scoring='recall',  # Focus sur le Recall pour le contexte médical
-    cv=5
-)
+results = get_evaluation(algorithme, param_grid, X_train, y_train, X_test, y_test)
 ```
+
+ # Retour d'un dictionnaire complet d'artefacts
+    return {
+        "best_model": best_model,
+        "best_params": grid_search.best_params_,
+        "best_cv_score": grid_search.best_score_,
+        "test_accuracy": test_accuracy,
+        "confusion_matrix": cm,
+        "y_pred": y_pred,
+        "cv_results": pd.DataFrame(grid_search.cv_results_)
+    }
+
 
 
