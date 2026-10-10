@@ -43,6 +43,54 @@ https://drive.google.com/file/d/1itXdRo4WJuhqCjtVX4WGvT327WWp4LB7/view
 - fractal_dimension_mean : "approximation de côte" - 1
 ```
 
+## Structure du projet
+
+```
+├── app.py
+├── data
+│   ├── breast_cancer_wisconsin.csv
+│   ├── processed_data
+│   │   ├── bcw_test.csv
+│   │   └── bcw_train.csv
+│   └── raw_data
+│       └── bcw_data.csv
+├── documentation
+│   └── Questions.pptx
+├── notebooks
+│   ├── archives
+│   │   ├── create-db-incendies.ipynb
+│   │   ├── eda_archive.ipynb
+│   │   └── eda_utils.py
+│   ├── eda.ipynb
+│   ├── __pycache__
+│   │   └── eda_utils.cpython-313.pyc
+│   └── training.ipynb
+├── pyproject.toml
+├── README.md
+├── scripts
+│   └── eda
+│       └── run_eda.py
+├── src
+│   └── building_perceptron
+│       ├── data
+│       │   ├── data_utils.py
+│       │   ├── __init__.py
+│       │   └── __pycache__
+│       ├── __init__.py
+│       ├── model
+│       │   ├── __init__.py
+│       │   ├── logistic_regression.py
+│       │   ├── perceptron.py
+│       │   └── __pycache__
+│       ├── __pycache__
+│       │   └── __init__.cpython-313.pyc
+│       ├── services
+│       │   └── __init__.py
+│       └── views
+│           └── __init__.py
+└── uv.lock
+
+
 ## Analyse
 
 ### Processus d'analyse exploratoire (EDA)
@@ -54,3 +102,4 @@ Le notebook `eda.ipynb` réalise une analyse complète des données :
 - Analyse de la distribution des variables
 - Visualisation des corrélations entre features
 - Équilibrage des classes (Maligne vs Bénigne)
+
