@@ -194,7 +194,7 @@ from building_perceptron.model.perceptron import Perceptron
 
 def get_evaluation(algorithme, param_grid, X_train, y_train, X_test, y_test):
 
-        # Recherche par grille avec 5-fold cross-validation
+    # Recherche par grille avec 5-fold cross-validation
     grid_search = GridSearchCV(
         estimator=algorithme,
         param_grid=param_grid,
@@ -255,16 +255,18 @@ param_grid = {
 results = get_evaluation(algorithme, param_grid, X_train, y_train, X_test, y_test)
 ```
 
- # Retour d'un dictionnaire complet d'artefacts
-    return {
-        "best_model": best_model,
-        "best_params": grid_search.best_params_,
-        "best_cv_score": grid_search.best_score_,
-        "test_accuracy": test_accuracy,
-        "confusion_matrix": cm,
-        "y_pred": y_pred,
-        "cv_results": pd.DataFrame(grid_search.cv_results_)
-    }
+#### Retour d'un dictionnaire complet d'artefacts
+return {
+    "best_model": best_model,
+    "best_params": grid_search.best_params_,
+    "best_cv_score": grid_search.best_score_,
+    "test_accuracy": test_accuracy,
+    "confusion_matrix": cm,
+    "y_pred": y_pred,
+    "cv_results": pd.DataFrame(grid_search.cv_results_)
+}
 
 
+## Etape suivante
 
+Développer l'interface graphique (streamlit)
