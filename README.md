@@ -256,16 +256,17 @@ results = get_evaluation(algorithme, param_grid, X_train, y_train, X_test, y_tes
 ```
 
 #### Retour d'un dictionnaire complet d'artefacts
-return {
-    "best_model": best_model,
-    "best_params": grid_search.best_params_,
-    "best_cv_score": grid_search.best_score_,
-    "test_accuracy": test_accuracy,
-    "confusion_matrix": cm,
-    "y_pred": y_pred,
-    "cv_results": pd.DataFrame(grid_search.cv_results_)
-}
-
+```python
+    return {
+        "best_model": best_model,
+        "best_params": grid_search.best_params_,
+        "best_cv_score": grid_search.best_score_,
+        "test_accuracy": test_accuracy,
+        "confusion_matrix": cm,
+        "y_pred": y_pred,
+        "cv_results": pd.DataFrame(grid_search.cv_results_)
+    }
+```
 
 ## Etape suivante
 
