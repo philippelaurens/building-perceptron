@@ -271,3 +271,9 @@ results = get_evaluation(algorithme, param_grid, X_train, y_train, X_test, y_tes
 ## Etape suivante
 
 Développer l'interface graphique (streamlit)
+
+**Auteur** : Philippe Laurens   
+**Date** : Octobre 2026  
+**Version** : 1.0.0  
+**Contexte** : Projet pédagogique - Formation IA en alternance (Marseille)
+**Remerciements** : Bruno et Pierre
