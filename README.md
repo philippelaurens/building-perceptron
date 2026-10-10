@@ -103,4 +103,20 @@ Le notebook `eda.ipynb` réalise une analyse complète des données :
 0. Analyse en Composantes Principales (PCA)
 
 
+## Training
+
+### Métriques de performance
+
+**⚠️ Importance du contexte médical :**
+
+En santé, un **Faux Négatif** (dire qu'une tumeur est bénigne alors qu'elle est maligne) est **bien plus grave** qu'un **Faux Positif** (faire des examens complémentaires inutiles).
+
+**Focus prioritaire sur le Recall (Sensibilité)** pour minimiser les faux négatifs et ne pas manquer de cas malins.
+
+**Métriques utilisées** :
+- **Recall (Sensibilité)** : Proportion de vrais malins correctement détectés
+- **Precision** : Proportion de diagnostics malins corrects
+- **F1-Score** : Moyenne harmonique de Precision et Recall
+- **Accuracy** : Taux de bonnes classifications global
+- **Matrice de confusion** : Visualisation détaillée des erreurs
 
