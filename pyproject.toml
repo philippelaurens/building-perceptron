@@ -10,6 +10,7 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "chardet>=5.2.0",
+    "kaleido>=1",
     "matplotlib>=3.11.2",
     "numpy>=2.5.3",
     "pandas>=3.0.6",
@@ -17,6 +18,7 @@ dependencies = [
     "pyprojroot>=0.3.0",
     "scikit-learn>=1.9.1",
     "seaborn>=0.13.2",
+    "streamlit>=1.65.0",
     "ucimlrepo>=0.0.7",
 ]
 
