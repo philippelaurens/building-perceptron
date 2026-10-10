@@ -89,10 +89,18 @@ https://drive.google.com/file/d/1itXdRo4WJuhqCjtVX4WGvT327WWp4LB7/view
 ### Processus d'analyse exploratoire (EDA)
 
 Le notebook `eda.ipynb` réalise une analyse complète des données :
-- Chargement et inspection initiale du dataset
+1. Chargement et inspection initiale du dataset
   - Détection et traitement de l'encodage, des doublons, des colonnes vides
   - Contrôle et harmonisation des types de données
-- Analyse de la distribution des variables
-- Statistiques descriptives
-- Équilibrage des classes (Maligne vs Bénigne)
+2. Statistiques descriptives
+  - Analyse de la distribution des variables
+  - Etude de la bimodalité de certaines distributions
+  - Analyse de la corrélation entre features, et des features avec la cible
+  - Etude du chevauchement entre features
+  - Tri des variables à l'information redondante
+3. Standardisation / Normalisation
+  - Choix du Robust Scaler
+Annexe : Analyse en Composantes Principales (PCA)
+
+
 
