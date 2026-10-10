@@ -120,3 +120,39 @@ En santé, un **Faux Négatif** (dire qu'une tumeur est bénigne alors qu'elle e
 - **Accuracy** : Taux de bonnes classifications global
 - **Matrice de confusion** : Visualisation détaillée des erreurs
 
+
+
+
+
+
+
+## Installation et utilisation
+
+### 1. Cloner le projet
+```bash
+git clone <url-du-repo>
+cd building-perceptron
+```
+
+### 2. Créer l'environnement virtuel avec uv
+```bash
+uv venv
+source .venv/Scripts/activate  # Git Bash
+```
+
+### 3. Installer les dépendances
+```bash
+uv pip install -e .
+```
+
+### 4. Lancer l'analyse
+```bash
+# Perceptron pédagogique
+uv run script/training/run_perceptron.py
+
+```
+
+
+
+
+
