@@ -90,16 +90,16 @@ https://drive.google.com/file/d/1itXdRo4WJuhqCjtVX4WGvT327WWp4LB7/view
 
 Le notebook `eda.ipynb` réalise une analyse complète des données :
 1. Chargement et inspection initiale du dataset
-  - Détection et traitement de l'encodage, des doublons, des colonnes vides
-  - Contrôle et harmonisation des types de données
+    - Détection et traitement de l'encodage, des doublons, des colonnes vides
+    - Contrôle et harmonisation des types de données
 2. Statistiques descriptives
-  - Analyse de la distribution des variables
-  - Etude de la bimodalité de certaines distributions
-  - Analyse de la corrélation entre features, et des features avec la cible
-  - Etude du chevauchement entre features
-  - Tri des variables à l'information redondante
+    - Analyse de la distribution des variables
+    - Etude de la bimodalité de certaines distributions
+    - Analyse de la corrélation entre features, et des features avec la cible
+    - Etude du chevauchement entre features
+    - Tri des variables à l'information redondante
 3. Standardisation / Normalisation
-  - Choix du Robust Scaler
+    - Choix du Robust Scaler
 Annexe : Analyse en Composantes Principales (PCA)
 
 
