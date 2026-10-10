@@ -90,9 +90,9 @@ https://drive.google.com/file/d/1itXdRo4WJuhqCjtVX4WGvT327WWp4LB7/view
 
 Le notebook `eda.ipynb` réalise une analyse complète des données :
 - Chargement et inspection initiale du dataset
-- Détection et traitement des valeurs manquantes
-- Identification et gestion des valeurs aberrantes
+  - Détection et traitement de l'encodage, des doublons, des colonnes vides
+  - Contrôle et harmonisation des types de données
 - Analyse de la distribution des variables
-- Visualisation des corrélations entre features
+- Statistiques descriptives
 - Équilibrage des classes (Maligne vs Bénigne)
 
