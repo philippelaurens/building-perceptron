@@ -48,7 +48,6 @@ https://drive.google.com/file/d/1itXdRo4WJuhqCjtVX4WGvT327WWp4LB7/view
 ```
 ├── app.py
 ├── data
-│   ├── breast_cancer_wisconsin.csv
 │   ├── processed_data
 │   │   ├── bcw_test.csv
 │   │   └── bcw_train.csv
@@ -62,8 +61,6 @@ https://drive.google.com/file/d/1itXdRo4WJuhqCjtVX4WGvT327WWp4LB7/view
 │   │   ├── eda_archive.ipynb
 │   │   └── eda_utils.py
 │   ├── eda.ipynb
-│   ├── __pycache__
-│   │   └── eda_utils.cpython-313.pyc
 │   └── training.ipynb
 ├── pyproject.toml
 ├── README.md
@@ -74,16 +71,12 @@ https://drive.google.com/file/d/1itXdRo4WJuhqCjtVX4WGvT327WWp4LB7/view
 │   └── building_perceptron
 │       ├── data
 │       │   ├── data_utils.py
-│       │   ├── __init__.py
-│       │   └── __pycache__
+│       │   └── __init__.py
 │       ├── __init__.py
 │       ├── model
 │       │   ├── __init__.py
 │       │   ├── logistic_regression.py
-│       │   ├── perceptron.py
-│       │   └── __pycache__
-│       ├── __pycache__
-│       │   └── __init__.cpython-313.pyc
+│       │   └── perceptron.py
 │       ├── services
 │       │   └── __init__.py
 │       └── views
