@@ -26,7 +26,7 @@ class Perceptron(BaseEstimator,ClassifierMixin):
     def fit(self, X: np.ndarray, y: np.ndarray):
 
         self.loss_history = []
-
+        
         if self.method == 'strict':
             return self.fit_strict(X, y)
         else:
