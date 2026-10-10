@@ -82,7 +82,7 @@ https://drive.google.com/file/d/1itXdRo4WJuhqCjtVX4WGvT327WWp4LB7/view
 │       └── views
 │           └── __init__.py
 └── uv.lock
-
+```
 
 ## Analyse
 
