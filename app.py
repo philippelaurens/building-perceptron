@@ -83,7 +83,7 @@ with tab_perceptron:
         # Exemple d'instanciation de votre classe Perceptron
         # (Adaptez les arguments selon la signature exacte de votre classe dans perceptron.py)
         perceptron_model = Perceptron(
-            learning_rate=learning_rate, epochs=n_epochs
+            lr=learning_rate, epochs=n_epochs
         )
 
         # Simulation visuelle ou affichage des résultats
